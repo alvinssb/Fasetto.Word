@@ -5,59 +5,42 @@ using Fasetto.Word.Core;
 
 namespace Fasetto.Word
 {
-    public class BasePage<VM> : Page
-        where VM : BaseViewModel, new()
+    public class BasePage : Page
     {
-        #region Private Members
-
-        private VM _viewMode;
-
-        #endregion
-
         #region Public Properties
 
         public PageAnimation PageLoadAnimation { get; set; } = PageAnimation.SlideAndFadeInFromRight;
 
         public PageAnimation PageUnloadAnimation { get; set; } = PageAnimation.SlideAndFadeOutToLeft;
 
-        public float SlideSeconds { get; set; } = 0.8f;
+        public float SlideSeconds { get; set; } = 0.4f;
 
-        public VM ViewModel
-        {
-            get => _viewMode;
-            set
-            {
-                if (_viewMode == value)
-                    return;
-
-                _viewMode = value;
-                this.DataContext = _viewMode;
-            }
-        }
+        public bool ShouldAnimateOut { get; set; }
 
         #endregion
 
         public BasePage()
         {
-            if (this.PageLoadAnimation != PageAnimation.None)
-                this.Visibility = Visibility.Collapsed;
+            if (PageLoadAnimation != PageAnimation.None)
+                Visibility = Visibility.Collapsed;
 
-            this.Loaded += BasePage_Loaded;
-
-            this.ViewModel = new VM();
+            Loaded += BasePage_LoadedAsync;
         }
 
-        private async void BasePage_Loaded(object sender, RoutedEventArgs e)
+        private async void BasePage_LoadedAsync(object sender, RoutedEventArgs e)
         {
-            await AnimationIn();
+            if (ShouldAnimateOut)
+                await AnimationOut();
+            else
+                await AnimationIn();
         }
 
         public async Task AnimationIn()
         {
-            if (this.PageLoadAnimation == PageAnimation.None)
+            if (PageLoadAnimation == PageAnimation.None)
                 return;
 
-            switch (this.PageLoadAnimation)
+            switch (PageLoadAnimation)
             {
                 case PageAnimation.SlideAndFadeInFromRight:
                     await this.SlideAndFadeInFromRightAsync(this.SlideSeconds);
@@ -77,5 +60,39 @@ namespace Fasetto.Word
                     break;
             }
         }
+    }
+
+    public class BasePage<VM> : BasePage
+        where VM : BaseViewModel, new()
+    {
+        #region Private Members
+
+        private VM _viewMode;
+
+        #endregion
+
+        #region Public Properties
+
+        public VM ViewModel
+        {
+            get => _viewMode;
+            set
+            {
+                if (_viewMode == value)
+                    return;
+
+                _viewMode = value;
+                DataContext = _viewMode;
+            }
+        }
+
+        #endregion
+
+        public BasePage()
+        {
+            ViewModel = new VM();
+        }
+
+        
     }
 }

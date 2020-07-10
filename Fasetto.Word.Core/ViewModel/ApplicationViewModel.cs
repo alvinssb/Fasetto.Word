@@ -20,6 +20,8 @@ namespace Fasetto.Word.Core
         public void GoToPage(ApplicationPage page)
         {
             CurrentPage = page;
+
+            SideMenuVisible = page == ApplicationPage.Chat;
         }
     }
 }

@@ -105,6 +105,8 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <local:ApplicationPageValueConverter x:Key="ApplicationPageValueConverter" />
     </Window.Resources>
 
     <WindowChrome.WindowChrome>
@@ -125,14 +127,11 @@
                 <ImageBrush TileMode="Tile" ViewportUnits="Absolute" Viewport="0 0 500 500" ImageSource="Images/Backgrounds/emoji-background.png"/>
             </Grid.Background>
 
-            <Frame Grid.Column="1"
-                   local:NoFrameHistoryProperty.Value="True"
-                   d:DataContext=""
-                   DataContext="{Binding ApplicationViewModel.CurrentPage, 
-                                Source={x:Static local:ViewModelLocator.Instance}, 
-                                Converter={local:ApplicationPageValueConverter}}" 
-                   Content="{Binding}"
-                   Background="Transparent"/>
+            <local:PageHost  Grid.Column="1" 
+                            CurrentPage="{Binding ApplicationViewModel.CurrentPage,
+                                        Source={x:Static local:ViewModelLocator.Instance},
+                                        Converter={StaticResource ApplicationPageValueConverter}}"
+                   />
 
             <local:SideMenuControl Width="300" 
                                    local:AnimateSlideFromLeftProperty.Value="{Binding ApplicationViewModel.SideMenuVisible,

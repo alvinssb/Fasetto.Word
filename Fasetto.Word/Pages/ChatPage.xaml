@@ -12,5 +12,6 @@
       Title="Chat">
 
     <Border>
+        <TextBlock Text="Hello Fasetto" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontSize="{StaticResource FontSizeXXLarge}"></TextBlock>
     </Border>
 </local:BasePage>

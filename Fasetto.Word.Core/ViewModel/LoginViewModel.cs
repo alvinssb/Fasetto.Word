@@ -38,8 +38,8 @@ namespace Fasetto.Word.Core
         {
             await RunCommand(() => this.LoginIsRunning, async () =>
             {
-                await Task.Delay(5000);
-                var email = this.Email;
+                await Task.Delay(1000);
+                IoC.Get<ApplicationViewModel>().GoToPage(ApplicationPage.Chat);
             });
         }
 

@@ -31,7 +31,8 @@ namespace Fasetto.Word.Core
 
         public RegisterViewModel()
         {
-            
+            RegisterCommand=new RelayCommand(async ()=>await RegisterAsync());
+            LoginCommand=new RelayCommand(async ()=>await LoginAsync());
         }
 
         #endregion
@@ -47,6 +48,7 @@ namespace Fasetto.Word.Core
         public async Task LoginAsync()
         {
             IoC.Get<ApplicationViewModel>().GoToPage(ApplicationPage.Login);
+            await Task.Delay(1);
         }
     }
 }
