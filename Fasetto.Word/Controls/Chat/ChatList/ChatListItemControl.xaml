@@ -40,11 +40,13 @@
 
                             <Border Grid.Column="1" Padding="0 0 8 0">
                                 <StackPanel VerticalAlignment="Center">
-                                    <TextBlock Text= "{Binding Name}" 
+                                    <TextBlock Text= "{Binding Name}"
+                                               Padding="0 0 0 2"
                                                Foreground="{StaticResource WordBlueBrush}"
                                                FontFamily="{StaticResource LatoRegular}"
                                                TextTrimming="CharacterEllipsis"/>
                                     <TextBlock Text="{Binding Message}"
+                                               Padding="0 2 0 0"
                                                Foreground="{StaticResource ForegroundDarkBrush}"
                                                FontFamily="{StaticResource LatoRegular}"
                                                TextTrimming="CharacterEllipsis"/>
@@ -78,6 +80,6 @@
     </UserControl.Resources>
 
     <ContentControl d:DataContext="{x:Static core:ChatListItemDesignModel.Instance}"
-                    Style="{StaticResource ContentStyle}"></ContentControl>
+                    Style="{StaticResource ContentStyle}"/>
 
 </UserControl>

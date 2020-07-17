@@ -71,17 +71,30 @@
     <Compile Include="AttachedProperties\FrameworkElementAnimationAttachedProperties.cs" />
     <Compile Include="AttachedProperties\NoFrameHistoryProperty.cs" />
     <Compile Include="AttachedProperties\PasswordBoxAttachedProperties.cs" />
-    <Compile Include="Controls\Chat\ChatListControl.xaml.cs">
+    <Compile Include="AttachedProperties\TextAttachedProperties.cs" />
+    <Compile Include="Controls\BubbleContent.xaml.cs">
+      <DependentUpon>BubbleContent.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Chat\ChatMessage\ChatMessageListControl.xaml.cs">
+      <DependentUpon>ChatMessageListControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Chat\ChatList\ChatListControl.xaml.cs">
       <DependentUpon>ChatListControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Chat\ChatListItemControl.xaml.cs">
+    <Compile Include="Controls\Chat\ChatList\ChatListItemControl.xaml.cs">
       <DependentUpon>ChatListItemControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Chat\ChatMessage\ChatMessageListItemControl.xaml.cs">
+      <DependentUpon>ChatMessageListItemControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\PageHost.xaml.cs">
       <DependentUpon>PageHost.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\SideMenuControl.xaml.cs">
       <DependentUpon>SideMenuControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Menu\VerticalMenu.xaml.cs">
+      <DependentUpon>VerticalMenu.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\BasePage.cs" />
     <Compile Include="Pages\ChatPage.xaml.cs">
@@ -96,16 +109,35 @@
     <Compile Include="ValueConverters\ApplicationPageValueConverter.cs" />
     <Compile Include="ValueConverters\BaseValueConverter.cs" />
     <Compile Include="ValueConverters\BoolenToVisiblityConverter.cs" />
+    <Compile Include="ValueConverters\IconTypeToFontAwesomeConverter.cs" />
     <Compile Include="ValueConverters\IoCConverter.cs" />
+    <Compile Include="ValueConverters\MenuItemTypeVisiblityConverter.cs" />
+    <Compile Include="ValueConverters\PopupContentConverter.cs" />
+    <Compile Include="ValueConverters\SentByMeToAlignmentConverter.cs" />
+    <Compile Include="ValueConverters\SentByMeToBackgroundConverter.cs" />
     <Compile Include="ValueConverters\StringRGBToBrushConverter.cs" />
+    <Compile Include="ValueConverters\TimeToDisplayTimeConverter.cs" />
+    <Compile Include="ValueConverters\TimeToReadTimeConverter.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
     <Compile Include="ViewModels\WindowViewModel.cs" />
     <Compile Include="Window\WindowResizer.cs" />
-    <Page Include="Controls\Chat\ChatListControl.xaml">
+    <Page Include="Controls\BubbleContent.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\Chat\ChatListItemControl.xaml">
+    <Page Include="Controls\Chat\ChatMessage\ChatMessageListControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Chat\ChatList\ChatListControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Chat\ChatList\ChatListItemControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Chat\ChatMessage\ChatMessageListItemControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -114,6 +146,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\SideMenuControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Menu\VerticalMenu.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

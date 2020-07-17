@@ -54,4 +54,15 @@ namespace Fasetto.Word
                 await element.SlideAndFadeOutAsync(AnimationSlideInDirection.Left,firstLoad?0:0.3f,false);
         }
     }
+
+    public class AnimateSlideFromBottomProperty : AnimateBaseProperty<AnimateSlideFromBottomProperty>
+    {
+        protected override async void DoAnimation(FrameworkElement element, bool value, bool firstLoad)
+        {
+            if (value)
+                await element.SlideAndFadeInAsync(AnimationSlideInDirection.Bottom, firstLoad ? 0 : 0.3f, false);
+            else
+                await element.SlideAndFadeOutAsync(AnimationSlideInDirection.Bottom, firstLoad ? 0 : 0.3f, false);
+        }
+    }
 }

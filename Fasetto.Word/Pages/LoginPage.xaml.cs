@@ -15,7 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Fasetto.Word.Core;
 
-namespace Fasetto.Word.Pages
+namespace Fasetto.Word
 {
     /// <summary>
     /// Interaction logic for LoginPage.xaml

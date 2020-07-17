@@ -10,7 +10,7 @@
     </Style>
 
     <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource BaseStyle}">
-        <Setter Property="FontSize" Value="{StaticResource FontSizeLarge}"/>
+        <Setter Property="FontSize" Value="{StaticResource FontSizeXXLarge}"/>
         <Setter Property="FontFamily" Value="{StaticResource LatoRegular}"/>
         <Setter Property="BorderBrush" Value="{StaticResource WordBlueBrush}"/>
         <Setter Property="BorderThickness" Value="0 0 0 1"/>
@@ -29,6 +29,7 @@
                                    Text="{TemplateBinding Tag}"
                                    x:Name="placeholder"
                                    FontFamily="{StaticResource LatoThin}"
+                                   FontSize="{TemplateBinding FontSize}"
                                    Padding="{TemplateBinding Padding}"
                                    VerticalAlignment="Center"
                                    HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
@@ -66,7 +67,7 @@
     </Style>
 
     <Style TargetType="{x:Type PasswordBox}" BasedOn="{StaticResource BaseStyle}">
-        <Setter Property="FontSize" Value="{StaticResource FontSizeLarge}"/>
+        <Setter Property="FontSize" Value="{StaticResource FontSizeXXLarge}"/>
         <Setter Property="FontFamily" Value="{StaticResource LatoRegular}"/>
         <Setter Property="BorderBrush" Value="{StaticResource WordBlueBrush}"/>
         <Setter Property="BorderThickness" Value="0 0 0 1"/>
@@ -87,6 +88,7 @@
                                    Text="{TemplateBinding Tag}"
                                    x:Name="placeholder"
                                    FontFamily="{StaticResource LatoThin}"
+                                   FontSize="{TemplateBinding FontSize}"
                                    Padding="{TemplateBinding Padding}"
                                    Visibility="{TemplateBinding local:HasTextProperty.Value,Converter={local:BoolenToVisiblityConverter}}"
                                    VerticalAlignment="Center"

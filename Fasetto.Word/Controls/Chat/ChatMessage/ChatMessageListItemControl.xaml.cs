@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -13,20 +12,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Fasetto.Word.Core;
 
 namespace Fasetto.Word
 {
     /// <summary>
-    /// Interaction logic for LoginPage.xaml
+    /// Interaction logic for ChatMessageListItemControl.xaml
     /// </summary>
-    public partial class RegisterPage : BasePage<RegisterViewModel>, IHavePassword
+    public partial class ChatMessageListItemControl : UserControl
     {
-        public RegisterPage()
+        public ChatMessageListItemControl()
         {
             InitializeComponent();
         }
-
-        public SecureString SecurePassword => PasswordText.SecurePassword;
     }
 }

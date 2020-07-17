@@ -1,11 +1,12 @@
-﻿using System.Threading.Tasks;
+﻿using System.ComponentModel;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using Fasetto.Word.Core;
 
 namespace Fasetto.Word
 {
-    public class BasePage : Page
+    public class BasePage : UserControl
     {
         #region Public Properties
 
@@ -21,6 +22,9 @@ namespace Fasetto.Word
 
         public BasePage()
         {
+            if (DesignerProperties.GetIsInDesignMode(this))
+                return;
+
             if (PageLoadAnimation != PageAnimation.None)
                 Visibility = Visibility.Collapsed;
 
@@ -43,7 +47,7 @@ namespace Fasetto.Word
             switch (PageLoadAnimation)
             {
                 case PageAnimation.SlideAndFadeInFromRight:
-                    await this.SlideAndFadeInFromRightAsync(this.SlideSeconds);
+                    await this.SlideAndFadeInAsync(AnimationSlideInDirection.Right, SlideSeconds, size: (int) Application.Current.MainWindow.Width);
                     break;
             }
         }
@@ -56,7 +60,7 @@ namespace Fasetto.Word
             switch (this.PageUnloadAnimation)
             {
                 case PageAnimation.SlideAndFadeOutToLeft:
-                    await this.SlideAndFadeOutToLeftAsync(this.SlideSeconds);
+                    await this.SlideAndFadeOutAsync(AnimationSlideInDirection.Left, SlideSeconds);
                     break;
             }
         }

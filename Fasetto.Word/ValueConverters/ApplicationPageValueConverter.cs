@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using System.Globalization;
 using Fasetto.Word.Core;
-using Fasetto.Word.Pages;
 
 namespace Fasetto.Word
 {
