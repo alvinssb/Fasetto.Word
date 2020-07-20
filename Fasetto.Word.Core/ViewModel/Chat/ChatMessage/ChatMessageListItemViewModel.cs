@@ -22,6 +22,8 @@ namespace Fasetto.Word.Core
 
         public bool SentByMe { get; set; }
 
+        public bool NewItem { get; set; }
+
         public DateTimeOffset MessageReadTime { get; set; }
 
         public DateTimeOffset MessageSentTime { get; set; }

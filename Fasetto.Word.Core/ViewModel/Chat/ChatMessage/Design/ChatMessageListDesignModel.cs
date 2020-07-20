@@ -3,9 +3,9 @@ using System.Collections.ObjectModel;
 
 namespace Fasetto.Word.Core
 {
-    public class ChatMessageListDesignModel:ChatMessageListViewModel
+    public class ChatMessageListDesignModel : ChatMessageListViewModel
     {
-        public static ChatMessageListDesignModel Instance=>new ChatMessageListDesignModel();
+        public static ChatMessageListDesignModel Instance => new ChatMessageListDesignModel();
 
         public ChatMessageListDesignModel()
         {

@@ -14,21 +14,21 @@ namespace Fasetto.Word
 
         public static async Task SlideAndFadeInAsync(this FrameworkElement element, AnimationSlideInDirection direction, float seconds = 0.3f, bool keepMargin = true, int size = 0)
         {
-            var sb=new Storyboard();
+            var sb = new Storyboard();
 
             switch (direction)
             {
                 case AnimationSlideInDirection.Left:
-                    sb.AddSlideFromLeft(seconds,size==0?element.ActualWidth:size,keepMargin:keepMargin);
+                    sb.AddSlideFromLeft(seconds, size == 0 ? element.ActualWidth : size, keepMargin: keepMargin);
                     break;
                 case AnimationSlideInDirection.Right:
-                    sb.AddSlideFromRight(seconds,size==0?element.ActualWidth:size,keepMargin:keepMargin);
+                    sb.AddSlideFromRight(seconds, size == 0 ? element.ActualWidth : size, keepMargin: keepMargin);
                     break;
                 case AnimationSlideInDirection.Top:
-                    sb.AddSlideFromTop(seconds,size==0?element.ActualWidth:size,keepMargin:keepMargin);
+                    sb.AddSlideFromTop(seconds, size == 0 ? element.ActualWidth : size, keepMargin: keepMargin);
                     break;
                 case AnimationSlideInDirection.Bottom:
-                    sb.AddSlideFromBottom(seconds,size==0?element.ActualWidth:size,keepMargin:keepMargin);
+                    sb.AddSlideFromBottom(seconds, size == 0 ? element.ActualWidth : size, keepMargin: keepMargin);
                     break;
             }
 
@@ -61,7 +61,7 @@ namespace Fasetto.Word
             sb.AddFadeOut(seconds);
             sb.Begin(element);
             element.Visibility = Visibility.Visible;
-            await Task.Delay((int)(seconds * 1000));
+            await Task.Delay((int) (seconds * 1000));
         }
 
         #endregion

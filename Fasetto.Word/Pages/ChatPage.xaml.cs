@@ -26,5 +26,25 @@ namespace Fasetto.Word
         {
             InitializeComponent();
         }
+
+        private void MessageText_OnPreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            var textBox = sender as TextBox;
+            if (e.Key == Key.Enter)
+            {
+                if (Keyboard.Modifiers.HasFlag(ModifierKeys.Control))
+                {
+                    var index = textBox.CaretIndex;
+                    textBox.Text = textBox.Text.Insert(index, Environment.NewLine);
+                    textBox.CaretIndex = index + Environment.NewLine.Length;
+                }
+                else
+                {
+                    ViewModel.Send();
+                }
+                e.Handled = true;
+            }
+            
+        }
     }
 }

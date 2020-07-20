@@ -29,33 +29,57 @@ namespace Fasetto.Word
                 RoutedEventHandler onLoaded = null;
                 onLoaded = (ss, ee) =>
                 {
-                    element.Loaded -= onLoaded; 
-                    DoAnimation(element,(bool)value,true);
+                    element.Loaded -= onLoaded;
+                    DoAnimation(element, (bool) value, true);
                     FirstLoad = false;
                 };
                 element.Loaded += onLoaded;
             }
             else
             {
-                DoAnimation(element,(bool)value, false);
+                DoAnimation(element, (bool) value, false);
             }
         }
 
-        protected virtual void DoAnimation(FrameworkElement element,bool value, bool firstLoad) { }
+        protected virtual void DoAnimation(FrameworkElement element, bool value, bool firstLoad)
+        {
+        }
     }
 
-    public class AnimateSlideFromLeftProperty : AnimateBaseProperty<AnimateSlideFromLeftProperty>
+    public class AnimateSlideInFromLeftProperty : AnimateBaseProperty<AnimateSlideInFromLeftProperty>
     {
         protected override async void DoAnimation(FrameworkElement element, bool value, bool firstLoad)
         {
             if (value)
-                await element.SlideAndFadeInAsync(AnimationSlideInDirection.Left, firstLoad?0:0.3f,false);
+                await element.SlideAndFadeInAsync(AnimationSlideInDirection.Left, firstLoad ? 0 : 0.3f, false);
             else
-                await element.SlideAndFadeOutAsync(AnimationSlideInDirection.Left,firstLoad?0:0.3f,false);
+                await element.SlideAndFadeOutAsync(AnimationSlideInDirection.Left, firstLoad ? 0 : 0.3f, false);
         }
     }
 
-    public class AnimateSlideFromBottomProperty : AnimateBaseProperty<AnimateSlideFromBottomProperty>
+    public class AnimateSlideInFromRightProperty : AnimateBaseProperty<AnimateSlideInFromRightProperty>
+    {
+        protected override async void DoAnimation(FrameworkElement element, bool value, bool firstLoad)
+        {
+            if (value)
+                await element.SlideAndFadeInAsync(AnimationSlideInDirection.Right, firstLoad ? 0 : 0.3f, false);
+            else
+                await element.SlideAndFadeOutAsync(AnimationSlideInDirection.Right, firstLoad ? 0 : 0.3f, false);
+        }
+    }
+
+    public class AnimateSlideInFromRightMarginProperty : AnimateBaseProperty<AnimateSlideInFromRightMarginProperty>
+    {
+        protected override async void DoAnimation(FrameworkElement element, bool value, bool firstLoad)
+        {
+            if (value)
+                await element.SlideAndFadeInAsync(AnimationSlideInDirection.Right, firstLoad ? 0 : 0.3f);
+            else
+                await element.SlideAndFadeOutAsync(AnimationSlideInDirection.Right, firstLoad ? 0 : 0.3f);
+        }
+    }
+
+    public class AnimateSlideInFromBottomProperty : AnimateBaseProperty<AnimateSlideInFromBottomProperty>
     {
         protected override async void DoAnimation(FrameworkElement element, bool value, bool firstLoad)
         {
@@ -63,6 +87,14 @@ namespace Fasetto.Word
                 await element.SlideAndFadeInAsync(AnimationSlideInDirection.Bottom, firstLoad ? 0 : 0.3f, false);
             else
                 await element.SlideAndFadeOutAsync(AnimationSlideInDirection.Bottom, firstLoad ? 0 : 0.3f, false);
+        }
+    }
+
+    public class AnimateSlideInFromBottomOnLoadProperty : AnimateBaseProperty<AnimateSlideInFromBottomOnLoadProperty>
+    {
+        protected override async void DoAnimation(FrameworkElement element, bool value, bool firstLoad)
+        {
+            await element.SlideAndFadeInAsync(AnimationSlideInDirection.Bottom, !value ? 0 : 0.3f, false);
         }
     }
 }

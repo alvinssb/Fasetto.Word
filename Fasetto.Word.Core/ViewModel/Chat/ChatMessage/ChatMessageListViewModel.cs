@@ -14,6 +14,12 @@ namespace Fasetto.Word.Core
 
         protected ObservableCollection<ChatMessageListItemViewModel> _items;
 
+        protected bool _searchIsOpen;
+
+        protected string _searchText;
+
+        protected string _lastSearchText;
+
         #endregion
 
         #region Public Properties
@@ -38,6 +44,37 @@ namespace Fasetto.Word.Core
 
         public bool AnyPopupVisible => AttachmentMenuVisible;
 
+        public string PendingMessageText { get; set; }
+
+        public bool SearchIsOpen
+        {
+            get => _searchIsOpen;
+            set
+            {
+                if (_searchIsOpen == value)
+                    return;
+                _searchIsOpen = value;
+                if (!_searchIsOpen)
+                    SearchText = string.Empty;
+
+            }
+        }
+
+        public string SearchText
+        {
+            get => _searchText;
+            set
+            {
+                if (_searchText == value)
+                    return;
+
+                _searchText = value;
+
+                if (string.IsNullOrEmpty(SearchText))
+                    Search();
+            }
+        }
+
         public ChatAttachmentPopupMenuViewModel AttachmentMenu { get; set; }
 
         #endregion
@@ -48,14 +85,29 @@ namespace Fasetto.Word.Core
 
         public ICommand PopupClickawayCommand { get; set; }
 
+        public ICommand OpenSearchCommand { get; set; }
+
+        public ICommand CloseSearchCommand { get; set; }
+
+        public ICommand ClearSearchCommand { get; set; }
+
+        public ICommand SearchCommand { get; set; }
+
+        public ICommand SendCommand { get; set; }
+
         #endregion
 
         public ChatMessageListViewModel()
         {
-            AttachmentButtonCommand=new RelayCommand(AttachmentButton);
-            PopupClickawayCommand=new RelayCommand(PopupClickaway);
+            AttachmentButtonCommand = new RelayCommand(AttachmentButton);
+            PopupClickawayCommand = new RelayCommand(PopupClickaway);
+            OpenSearchCommand = new RelayCommand(OpenSearch);
+            CloseSearchCommand = new RelayCommand(CloseSearch);
+            SearchCommand = new RelayCommand(Search);
+            SendCommand = new RelayCommand(Send);
+            ClearSearchCommand = new RelayCommand(ClearSearch);
 
-            AttachmentMenu=new ChatAttachmentPopupMenuViewModel();
+            AttachmentMenu = new ChatAttachmentPopupMenuViewModel();
         }
 
         #region Command Methods
@@ -68,6 +120,60 @@ namespace Fasetto.Word.Core
         public void PopupClickaway()
         {
             AttachmentMenuVisible = false;
+        }
+
+        public void Send()
+        {
+            if (string.IsNullOrEmpty(PendingMessageText))
+                return;
+
+            if(Items==null)
+                Items=new ObservableCollection<ChatMessageListItemViewModel>();
+
+            if(FilteredItems==null)
+                FilteredItems=new ObservableCollection<ChatMessageListItemViewModel>();
+
+            var message = new ChatMessageListItemViewModel
+            {
+                Initials = "LM",
+                Message = PendingMessageText,
+                MessageSentTime = DateTime.UtcNow,
+                SentByMe = true,
+                SenderName = "Luke Malpass",
+                NewItem = true
+            };
+            Items.Add(message);
+            FilteredItems.Add(message);
+
+            PendingMessageText = string.Empty;
+        }
+
+        public void Search()
+        {
+            if (string.IsNullOrEmpty(_lastSearchText) && string.IsNullOrEmpty(SearchText) || string.Equals(_lastSearchText, SearchText))
+                return;
+
+            if (string.IsNullOrEmpty(SearchText) || Items == null || Items.Count == 0)
+            {
+                FilteredItems = new ObservableCollection<ChatMessageListItemViewModel>(Items ?? Enumerable.Empty<ChatMessageListItemViewModel>());
+                _lastSearchText = SearchText;
+                return;
+            }
+
+            FilteredItems = new ObservableCollection<ChatMessageListItemViewModel>(Items.Where(item => item.Message.ToLower().Contains(SearchText)));
+            _lastSearchText = SearchText;
+        }
+
+        public void OpenSearch() => SearchIsOpen = true;
+
+        public void CloseSearch() => SearchIsOpen = false;
+
+        public void ClearSearch()
+        {
+            if (!string.IsNullOrEmpty(SearchText))
+                SearchText = string.Empty;
+            else
+                SearchIsOpen = false;
         }
 
         #endregion

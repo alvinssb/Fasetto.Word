@@ -15,6 +15,7 @@
                     HorizontalAlignment="Left"
                     CornerRadius="{Binding ActualWidth, RelativeSource={RelativeSource Self}}"
                     Height="{Binding ActualWidth, RelativeSource={RelativeSource Self}}"
+                    Visibility="{Binding SentByMe, Converter={local:BoolenToVisiblityConverter}}"
                     Width="35"
                     Margin="0 7.5 0 7.5"
                     Background="Green"

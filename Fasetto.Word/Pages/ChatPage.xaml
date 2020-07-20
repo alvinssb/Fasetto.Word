@@ -4,7 +4,6 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Fasetto.Word"
-      xmlns:word="clr-namespace:Fasetto.Word"
       xmlns:core="clr-namespace:Fasetto.Word.Core;assembly=Fasetto.Word.Core"
       mc:Ignorable="d"
       x:Name="Page"
@@ -28,6 +27,15 @@
             </Border.InputBindings>
         </Border>
 
+        <!-- Attachment Menu Popup -->
+        <Border Grid.Row="1"
+                Panel.ZIndex="2"
+                VerticalAlignment="Bottom"
+                HorizontalAlignment="Left"
+                local:AnimateSlideInFromBottomProperty.Value="{Binding AttachmentMenuVisible}">
+            <local:BubbleContent DataContext="{Binding AttachmentMenu}"/>
+        </Border>
+
         <!-- Title bar -->
         <Grid Height="50">
             <Grid.ColumnDefinitions>
@@ -48,31 +56,61 @@
 
                 <!-- Search Button -->
                 <Button Style="{StaticResource IconGrowButton}"
-                        Content="{StaticResource FontAwesomeSearchIcon}"/>
+                        Content="{StaticResource FontAwesomeSearchIcon}"
+                        Command="{Binding OpenSearchCommand}"/>
 
                 <Button Style="{StaticResource IconGrowButton}"
                         Content="{StaticResource FontAwesomeEllipsisVerticalIcon}"/>
             </StackPanel>
+
+            <!-- Search Overlay -->
+            <Grid ColumnSpan="2"
+                  local:AnimateSlideInFromRightMarginProperty.Value="{Binding SearchIsOpen}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Close search button -->
+                <Button Style="{StaticResource IconGrowButton}"
+                        Content="{StaticResource FontAwesomeCloseIcon}"
+                        Foreground="{StaticResource WordOrangeBrush}"
+                        Command="{Binding CloseSearchCommand}"/>
+
+                <!-- Search box -->
+                <TextBox Grid.Column="1"
+                         Tag="Search text..."
+                         local:FocusProperty.Value="{Binding SearchIsOpen}"
+                         Margin="0 5 5 5"
+                         FontSize="{StaticResource FontSizeRegular}"
+                         Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
+                         >
+                    <TextBox.InputBindings>
+                        <KeyBinding Command="{Binding CloseSearchCommand}" Key="Esc"/>
+                        <KeyBinding Command="{Binding SearchCommand}" Key="Return"/>
+                    </TextBox.InputBindings>
+                </TextBox>
+            </Grid>
 
         </Grid>
 
         <local:ChatMessageListControl
             x:Name="ChatMessageList"
             Grid.Row="1"
-            DataContext="{Binding}">
-        </local:ChatMessageListControl>
+            DataContext="{Binding}"/>
 
         <!-- Attachment Menu Popup -->
         <Border Grid.Row="1"
                 Panel.ZIndex="2"
                 VerticalAlignment="Bottom"
                 HorizontalAlignment="Left"
-                local:AnimateSlideFromBottomProperty.Value="{Binding AttachmentMenuVisible}">
+                local:AnimateSlideInFromBottomProperty.Value="{Binding AttachmentMenuVisible}">
             <local:BubbleContent DataContext="{Binding AttachmentMenu}"/>
         </Border>
 
         <!-- Message Send Text box -->
         <Grid Grid.Row="2"
+              Panel.ZIndex="3"
               MinHeight="50"
               MaxHeight="114"
               Background="{StaticResource ForegroundLightBrush}">
@@ -87,6 +125,7 @@
                     Height="{Binding MinHeight, RelativeSource={RelativeSource AncestorType=Grid}}"
                     Content="{StaticResource FontAwesomePaperclipIcon}"
                     Foreground="{StaticResource ForegroundDarkBrush}"
+                    VerticalContentAlignment="Top"
                     Command="{Binding AttachmentButtonCommand}"
                     VerticalAlignment="Top"/>
 
@@ -95,16 +134,20 @@
                      Grid.Column="1"
                      Tag="Write a message..."
                      FontSize="{StaticResource FontSizeRegular}"
+                     Text="{Binding PendingMessageText, UpdateSourceTrigger=PropertyChanged}"
+                     BorderThickness="0"
                      VerticalAlignment="Center"
                      Padding="0 10 10 10"
                      AcceptsReturn="True"
                      AcceptsTab="True"
                      VerticalScrollBarVisibility="Auto"
-                     local:IsFocusedProperty.Value="True"/>
+                     local:IsFocusedProperty.Value="True"
+                     PreviewKeyDown="MessageText_OnPreviewKeyDown"/>
 
             <!-- Additional buttons -->
             <StackPanel Grid.Column="2"
                         Orientation="Horizontal"
+                        VerticalAlignment="Top"
                         Margin="0 0 8 0"
                         >
                 <Button Style="{StaticResource IconGrowButton}"
@@ -116,6 +159,7 @@
                         FontSize="{StaticResource FontSizeRegular}"
                         Padding="8"
                         Background="{StaticResource WordGreenBrush}"
+                        Command="{Binding SendCommand}"
                         IsDefault="True"
                         Focusable="False"/>
             </StackPanel>

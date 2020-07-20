@@ -13,4 +13,16 @@ namespace Fasetto.Word
             control.Loaded += (s, se) => control.Focus();
         }
     }
+
+    public class FocusProperty : BaseAttachedProperty<FocusProperty, bool>
+    {
+        public override void OnValueChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (!(sender is Control control))
+                return;
+
+            if ((bool) e.NewValue)
+                control.Focus();
+        }
+    }
 }
