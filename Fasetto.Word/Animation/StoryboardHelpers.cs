@@ -137,7 +137,7 @@ namespace Fasetto.Word
 
         #region Fade In/Out
 
-        public static void AddFadeIn(this Storyboard storyboard, float seconds)
+        public static void AddFadeIn(this Storyboard storyboard, float seconds, bool from = false)
         {
             var animation = new DoubleAnimation
             {
@@ -145,6 +145,9 @@ namespace Fasetto.Word
                 From = 0,
                 To = 1
             };
+
+            if (from)
+                animation.From = 0;
 
             Storyboard.SetTargetProperty(animation, new PropertyPath("Opacity"));
             storyboard.Children.Add(animation);

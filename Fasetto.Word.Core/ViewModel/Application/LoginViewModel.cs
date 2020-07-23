@@ -36,7 +36,7 @@ namespace Fasetto.Word.Core
 
         public async Task Login(object parameter)
         {
-            await RunCommand(() => this.LoginIsRunning, async () =>
+            await RunCommandAsync(() => this.LoginIsRunning, async () =>
             {
                 await Task.Delay(1000);
                 IoC.Get<ApplicationViewModel>().GoToPage(ApplicationPage.Chat);

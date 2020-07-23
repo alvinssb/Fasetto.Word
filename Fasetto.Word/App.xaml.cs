@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using Dna;
 using Fasetto.Word.Core;
 
 namespace Fasetto.Word
@@ -22,6 +23,12 @@ namespace Fasetto.Word
 
             Current.MainWindow = new MainWindow();
             Current.MainWindow.Show();
+        }
+
+        private async Task ApplicationSetupAsync()
+        {
+            Framework.Construct<DefaultFrameworkConstruction>()
+                .AddFileLogger();
         }
     }
 }

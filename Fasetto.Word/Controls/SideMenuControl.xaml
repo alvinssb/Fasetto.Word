@@ -9,40 +9,45 @@
     
     <UserControl.Template>
         <ControlTemplate TargetType="UserControl">
-            <!-- Content -->
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
 
-                <Grid Height="50">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
+            <!-- Main background -->
+            <Border>
+                <!-- Content -->
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
 
-                    <!-- Main buttons -->
-                    <StackPanel Orientation="Horizontal">
-                        <Button Style="{StaticResource IconButton}" Content="{StaticResource FontAwesomeChatIcon}"/>
-                        <Button Style="{StaticResource IconButton}" Content="{StaticResource FontAwesomeUserIcon}"/>
-                        <Button Style="{StaticResource IconButton}" Content="{StaticResource FontAwesomePictureIcon}"/>
-                    </StackPanel>
+                    <Grid Height="50">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
 
-                    <!-- Settings button -->
-                    <Button Grid.Column="2" 
-                            Foreground="{StaticResource WordDarkBlueBrush}" 
-                            Style="{StaticResource IconButton}" 
-                            Content="{StaticResource FontAwesomeCogIcon}"/>
+                        <!-- Main buttons -->
+                        <StackPanel Orientation="Horizontal">
+                            <Button Style="{StaticResource IconButton}" Content="{StaticResource FontAwesomeChatIcon}"/>
+                            <Button Style="{StaticResource IconButton}" Content="{StaticResource FontAwesomeUserIcon}"/>
+                            <Button Style="{StaticResource IconButton}" Content="{StaticResource FontAwesomePictureIcon}"/>
+                        </StackPanel>
+
+                        <!-- Settings button -->
+                        <Button Grid.Column="2" 
+                                Foreground="{StaticResource WordDarkBlueBrush}" 
+                                Style="{StaticResource IconButton}" 
+                                Content="{StaticResource FontAwesomeCogIcon}"/>
+                    </Grid>
+
+                    <!-- The user content -->
+                    <Border Background="{StaticResource ForegroundLightBrush}"
+                            Grid.Row="1">
+                        <ContentPresenter/>
+                    </Border>
                 </Grid>
-
-                <!-- The user content -->
-                <Border Background="{StaticResource ForegroundLightBrush}"
-                        Grid.Row="1">
-                    <ContentPresenter/>
-                </Border>
-            </Grid>
+            </Border>
+            
            
         </ControlTemplate>
     </UserControl.Template>

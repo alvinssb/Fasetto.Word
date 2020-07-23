@@ -10,9 +10,11 @@ namespace Fasetto.Word
     public abstract class AnimateBaseProperty<Parent> : BaseAttachedProperty<Parent, bool>
         where Parent : BaseAttachedProperty<Parent, bool>, new()
     {
-        #region Public Properties
+        #region Protect Properties
 
-        public bool FirstLoad { get; set; } = true;
+        protected Dictionary<WeakReference, bool> AlreadyLoaded = new Dictionary<WeakReference, bool>();
+
+        protected Dictionary<WeakReference, bool> FirstLoadValue = new Dictionary<WeakReference, bool>();
 
         #endregion
 
@@ -21,24 +23,31 @@ namespace Fasetto.Word
             if (!(sender is FrameworkElement element))
                 return;
 
-            if (sender.GetValue(ValueProperty) == value && !FirstLoad)
+            var alreadyLoadedReference = AlreadyLoaded.FirstOrDefault(f => f.Key.Target == sender);
+            var firstLoadReference = FirstLoadValue.FirstOrDefault(f => f.Key.Target == sender);
+            if ((bool) sender.GetValue(ValueProperty) == (bool) value && alreadyLoadedReference.Key != null)
                 return;
 
-            if (FirstLoad)
+            if (alreadyLoadedReference.Key == null)
             {
+                var weakReference = new WeakReference(sender);
+                AlreadyLoaded[weakReference] = false;
+                element.Visibility = Visibility.Hidden;
                 RoutedEventHandler onLoaded = null;
-                onLoaded = (ss, ee) =>
+                onLoaded = async (ss, ee) =>
                 {
                     element.Loaded -= onLoaded;
-                    DoAnimation(element, (bool) value, true);
-                    FirstLoad = false;
+                    await Task.Delay(5);
+                    firstLoadReference = FirstLoadValue.FirstOrDefault(f => f.Key.Target == sender);
+                    DoAnimation(element, firstLoadReference.Key != null ? firstLoadReference.Value : (bool) value, true);
+                    AlreadyLoaded[weakReference] = true;
                 };
                 element.Loaded += onLoaded;
             }
+            else if (alreadyLoadedReference.Value == false)
+                FirstLoadValue[new WeakReference(sender)] = (bool) value;
             else
-            {
                 DoAnimation(element, (bool) value, false);
-            }
         }
 
         protected virtual void DoAnimation(FrameworkElement element, bool value, bool firstLoad)
@@ -95,6 +104,17 @@ namespace Fasetto.Word
         protected override async void DoAnimation(FrameworkElement element, bool value, bool firstLoad)
         {
             await element.SlideAndFadeInAsync(AnimationSlideInDirection.Bottom, !value ? 0 : 0.3f, false);
+        }
+    }
+
+    public class AnimateFadeInProperty : AnimateBaseProperty<AnimateFadeInProperty>
+    {
+        protected override async void DoAnimation(FrameworkElement element, bool value, bool firstLoad)
+        {
+            if (value)
+                await element.FadeInAsync(firstLoad, firstLoad ? 0 : 0.3f);
+            else
+                await element.FadeOutAsync(firstLoad ? 0 : 0.3f);
         }
     }
 }

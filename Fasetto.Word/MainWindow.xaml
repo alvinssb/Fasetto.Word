@@ -19,7 +19,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Window}">
-                        <!-- Outer border with the dropshadow margin -->
+                        <!-- Outer border with the drop shadow margin -->
                         <Border Margin="{Binding OuterMarginSizeThickness, FallbackValue=10}">
 
                             <!-- Main window outline -->
@@ -121,11 +121,15 @@
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="5*"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid.Background> 
                 <ImageBrush TileMode="Tile" ViewportUnits="Absolute" Viewport="0 0 500 500" ImageSource="Images/Backgrounds/emoji-background.png"/>
             </Grid.Background>
+
+            <!-- Settings page -->
+            <local:SettingsControl Grid.ColumnSpan="2"
+                                   />
 
             <local:PageHost  Grid.Column="1" 
                             CurrentPage="{Binding ApplicationViewModel.CurrentPage,

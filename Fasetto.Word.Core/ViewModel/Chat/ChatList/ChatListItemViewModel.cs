@@ -1,6 +1,9 @@
-﻿namespace Fasetto.Word.Core
+﻿using System.Windows.Input;
+using Fasetto.Word;
+
+namespace Fasetto.Word.Core
 {
-    public class ChatListItemViewModel:BaseViewModel
+    public class ChatListItemViewModel : BaseViewModel
     {
         #region Public Properties
 
@@ -15,6 +18,28 @@
         public bool NewContentAvailable { get; set; }
 
         public bool IsSelected { get; set; }
+
+        #endregion
+
+        #region Public Commands
+
+        public ICommand OpenMessageCommand { get; set; }
+
+        #endregion
+
+        public ChatListItemViewModel()
+        {
+            OpenMessageCommand=new RelayCommand(OpenMessage);
+        }
+
+        #region Command Methods
+
+        public void OpenMessage()
+        {
+            if (Name == "Jesse")
+            {
+            }
+        }
 
         #endregion
     }

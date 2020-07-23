@@ -39,7 +39,7 @@ namespace Fasetto.Word.Core
 
         public async Task RegisterAsync()
         {
-            await RunCommand(() => RegisterIsRunning, async () =>
+            await RunCommandAsync(() => RegisterIsRunning, async () =>
             {
                 await Task.Delay(5000);
             });

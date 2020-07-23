@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 
 namespace Fasetto.Word
 {
@@ -23,6 +24,35 @@ namespace Fasetto.Word
 
             if ((bool) e.NewValue)
                 control.Focus();
+        }
+    }
+
+    public class FocusAndSelectProperty : BaseAttachedProperty<FocusAndSelectProperty, bool>
+    {
+        public override void OnValueChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        {
+            switch (sender)
+            {
+                case TextBoxBase control:
+                {
+                    if ((bool) e.NewValue)
+                    {
+                        control.Focus();
+                        control.SelectAll();
+                    }
+                    break;
+                }
+
+                case PasswordBox password:
+                {
+                    if ((bool) e.NewValue)
+                    {
+                        password.Focus();
+                        password.SelectAll();
+                    }
+                    break;
+                }
+            }
         }
     }
 }

@@ -6,55 +6,80 @@
              xmlns:local="clr-namespace:Fasetto.Word"
              xmlns:core="clr-namespace:Fasetto.Word.Core;assembly=Fasetto.Word.Core"
              mc:Ignorable="d"
-             Height="60"
-             d:DesignHeight="60" d:DesignWidth="300">
+             d:DesignWidth="300">
 
     <UserControl.Resources>
         <Style x:Key="ContentStyle" TargetType="{x:Type ContentControl}">
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ContentControl}">
-                        <Grid x:Name="container"  Background="{StaticResource ForegroundLightBrush}">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
 
-                            <Grid Background="Red" 
+                        <!-- Content -->
+                        <Border x:Name="background" Background="{StaticResource ForegroundLightBrush}">
+
+                            <!-- Click to open message -->
+                            <Border.InputBindings>
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding OpenMessageCommand}"/>
+                            </Border.InputBindings>
+
+                            <Grid x:Name="container"  Background="Transparent">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <!-- New Message Indicator Bar -->
+                                <Grid Background="Red" 
                                   Width="4" 
                                   HorizontalAlignment="Left" 
                                   Visibility="{Binding NewContentAvailable, Converter={local:BoolenToVisiblityConverter}, ConverterParameter=True}"/>
 
-                            <Border Padding="8">
-                                <Border Background="{Binding ProfilePictureRGB, Converter={local:StringRGBToBrushConverter}}"
+                                <!-- Profile picture padding -->
+                                <Border Grid.Column="0" Padding="8 15">
+
+                                    <!-- Profile picture background -->
+                                    <Border Background="{Binding ProfilePictureRGB, Converter={local:StringRGBToBrushConverter}}"
                                         Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"
-                                        CornerRadius="{Binding ActualHeight, RelativeSource={RelativeSource Self}}">
-                                    <TextBlock Text="{Binding Initials}" 
+                                        CornerRadius="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"
+                                        Height="40">
+                                        <!-- Profile picture initials -->
+                                        <TextBlock Text="{Binding Initials}" 
                                                VerticalAlignment="Center"
                                                HorizontalAlignment="Center"
                                                Foreground="{StaticResource ForegroundLightBrush}"
                                                FontFamily="{StaticResource LatoRegular}"
                                                FontSize="{StaticResource FontSizeLarge}"/>
+                                    </Border>
                                 </Border>
-                            </Border>
 
-                            <Border Grid.Column="1" Padding="0 0 8 0">
-                                <StackPanel VerticalAlignment="Center">
-                                    <TextBlock Text= "{Binding Name}"
+                                <!-- Main content -->
+                                <Border Grid.Column="1" Padding="0 0 15 0">
+                                    <StackPanel VerticalAlignment="Center">
+                                        <!-- Name-->
+                                        <TextBlock Text= "{Binding Name}"
                                                Padding="0 0 0 2"
                                                Foreground="{StaticResource WordBlueBrush}"
                                                FontFamily="{StaticResource LatoRegular}"
                                                TextTrimming="CharacterEllipsis"/>
-                                    <TextBlock Text="{Binding Message}"
+                                        <!-- Message -->
+                                        <TextBlock Text="{Binding Message}"
                                                Padding="0 2 0 0"
                                                Foreground="{StaticResource ForegroundDarkBrush}"
                                                FontFamily="{StaticResource LatoRegular}"
                                                TextTrimming="CharacterEllipsis"/>
-                                </StackPanel>
-                            </Border>
-                        </Grid>
+                                    </StackPanel>
+                                </Border>
+                            </Grid>
+                        </Border>
+                        
 
+                        <!-- Hover effect -->
                         <ControlTemplate.Triggers>
+
+                            <DataTrigger Binding="{Binding IsSelected}">
+                                <Setter Property="Background" TargetName="background" Value="{StaticResource WordVeryVeryLightBlueBrush}"/>
+                            </DataTrigger>
+
                             <EventTrigger RoutedEvent="MouseEnter">
                                 <BeginStoryboard>
                                     <Storyboard>

@@ -17,7 +17,6 @@
             Message = "This new chat app is awesome! I bet it willbe fast too";
             Initials = "LM";
             ProfilePictureRGB = "3099c5";
-            NewContentAvailable = true;
         }
 
         #endregion
