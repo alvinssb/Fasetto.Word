@@ -19,16 +19,19 @@ namespace Fasetto.Word
         {
             base.OnStartup(e);
 
-            IoC.Setup();
+            ApplicationSetupAsync();
 
             Current.MainWindow = new MainWindow();
             Current.MainWindow.Show();
         }
 
-        private async Task ApplicationSetupAsync()
+        private void ApplicationSetupAsync()
         {
             Framework.Construct<DefaultFrameworkConstruction>()
-                .AddFileLogger();
+                .AddFileLogger()
+                .AddFasettoWordViewModels()
+                .AddFasettoWordClientServices()
+                .Build();
         }
     }
 }

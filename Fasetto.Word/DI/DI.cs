@@ -1,5 +1,4 @@
 ﻿using Dna;
-using Fasetto.Word.Core;
 
 namespace Fasetto.Word
 {

@@ -2,12 +2,20 @@
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using Dna;
 using Fasetto.Word.Core;
 
 namespace Fasetto.Word
 {
     public class BasePage : UserControl
     {
+
+        #region Private Member
+
+        private object _viewModel;
+
+        #endregion
+
         #region Public Properties
 
         public PageAnimation PageLoadAnimation { get; set; } = PageAnimation.SlideAndFadeInFromRight;
@@ -17,6 +25,21 @@ namespace Fasetto.Word
         public float SlideSeconds { get; set; } = 0.4f;
 
         public bool ShouldAnimateOut { get; set; }
+
+        public object ViewModelObject
+        {
+            get => _viewModel;
+            set
+            {
+                if (_viewModel == value)
+                    return;
+
+                _viewModel = value;
+
+                OnViewModelChanged();
+                DataContext = _viewModel;
+            }
+        }
 
         #endregion
 
@@ -34,12 +57,12 @@ namespace Fasetto.Word
         private async void BasePage_LoadedAsync(object sender, RoutedEventArgs e)
         {
             if (ShouldAnimateOut)
-                await AnimationOut();
+                await AnimationOutAsync();
             else
-                await AnimationIn();
+                await AnimationInAsync();
         }
 
-        public async Task AnimationIn()
+        public async Task AnimationInAsync()
         {
             if (PageLoadAnimation == PageAnimation.None)
                 return;
@@ -52,7 +75,7 @@ namespace Fasetto.Word
             }
         }
 
-        public async Task AnimationOut()
+        public async Task AnimationOutAsync()
         {
             if (this.PageLoadAnimation == PageAnimation.None)
                 return;
@@ -64,39 +87,43 @@ namespace Fasetto.Word
                     break;
             }
         }
+
+        protected virtual void OnViewModelChanged() { }
     }
 
     public class BasePage<VM> : BasePage
         where VM : BaseViewModel, new()
     {
-        #region Private Members
-
-        private VM _viewMode;
-
-        #endregion
-
         #region Public Properties
 
         public VM ViewModel
         {
-            get => _viewMode;
-            set
-            {
-                if (_viewMode == value)
-                    return;
-
-                _viewMode = value;
-                DataContext = _viewMode;
-            }
+            get => (VM) ViewModelObject;
+            set => ViewModelObject = value;
         }
 
         #endregion
 
         public BasePage()
         {
-            ViewModel = new VM();
+            if (DesignerProperties.GetIsInDesignMode(this))
+                ViewModel = new VM();
+            else
+                ViewModel = Framework.Service<VM>() ?? new VM();
         }
 
-        
+        public BasePage(VM specificViewModel = null)
+        {
+            if (specificViewModel != null)
+                ViewModel = specificViewModel;
+            else
+            {
+                if (DesignerProperties.GetIsInDesignMode(this))
+                    ViewModel = new VM();
+                else
+                    ViewModel = Framework.Service<VM>() ?? new VM();
+            }
+        }
+
     }
 }

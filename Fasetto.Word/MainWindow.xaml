@@ -127,14 +127,12 @@
                 <ImageBrush TileMode="Tile" ViewportUnits="Absolute" Viewport="0 0 500 500" ImageSource="Images/Backgrounds/emoji-background.png"/>
             </Grid.Background>
 
-            <!-- Settings page -->
-            <local:SettingsControl Grid.ColumnSpan="2"
-                                   />
 
             <local:PageHost  Grid.Column="1" 
                             CurrentPage="{Binding ApplicationViewModel.CurrentPage,
-                                        Source={x:Static local:ViewModelLocator.Instance},
-                                        Converter={StaticResource ApplicationPageValueConverter}}"
+                                        Source={x:Static local:ViewModelLocator.Instance}}"
+                            CurrentPageViewModel="{Binding ApplicationViewModel.CurrentPageViewModel,
+                                        Source={x:Static local:ViewModelLocator.Instance}}"
                    />
 
             <local:SideMenuControl Width="300" 

@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:Fasetto.Word"
              xmlns:core="clr-namespace:Fasetto.Word.Core;assembly=Fasetto.Word.Core"
              mc:Ignorable="d"
-             d:DataContext="{x:Static core:SettingsDesignModel.Instance}">
+             d:DataContext="{x:Static local:SettingsDesignModel.Instance}">
     <Border Background="{StaticResource ForegroundLightBrush}">
         <Grid>
             <Grid.RowDefinitions>
